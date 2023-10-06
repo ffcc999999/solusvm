@@ -7,7 +7,8 @@ curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyr
 echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
 apt update -y
 apt -y install php8.1 php8.1-{common,cli,gd,mysql,mbstring,bcmath,xml,fpm,curl,zip} mariadb-server nginx tar unzip git redis-server wget sudo
-COMPOSER_ALLOW_SUPERUSER=1 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+COMPOSER_ALLOW_SUPERUSER=1
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 mkdir -p /var/www/pterodactyl
 cd /var/www/pterodactyl
 curl -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/latest/download/panel.tar.gz
@@ -16,6 +17,7 @@ chmod -R 755 storage/* bootstrap/cache/
 mysqlpass=`openssl rand -base64 16`
 echo "CREATE USER 'pterodactyl'@'127.0.0.1' IDENTIFIED BY '$mysqlpass'; CREATE DATABASE panel; GRANT ALL PRIVILEGES ON panel.* TO 'pterodactyl'@'127.0.0.1' WITH GRANT OPTION;" | mysql -u root
 cp .env.example .env
+COMPOSER_ALLOW_SUPERUSER=1
 composer install --no-dev --optimize-autoloader --no-interaction
 php artisan key:generate --force
 sed -i 's/^DB_PASSWORD.*$/DB_PASSWORD=$mysqlpass/' .env
@@ -25,7 +27,7 @@ chown -R www-data:www-data /var/www/pterodactyl/*
 rm /etc/nginx/sites-enabled/default
 wget https://raw.githubusercontent.com/ffcc999999/solusvm/main/nginx_default.conf -O /etc/nginx/sites-available/pterodactyl.conf
 sudo ln -s /etc/nginx/sites-available/pterodactyl.conf /etc/nginx/sites-enabled/pterodactyl.conf
-sed -i 's/^server_name <domain>.*$/server_name $hostname;/' /etc/nginx/sites-available/pterodactyl.conf
+sudo sed -i 's/^server_name.*$/server_name $hostname;/' /etc/nginx/sites-available/pterodactyl.conf
 (crontab -l 2>/dev/null; echo "* * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1") | crontab -
 sh -c 'cat << EOF >> /etc/systemd/system/pteroq.service 
 # Pterodactyl Queue Worker File
