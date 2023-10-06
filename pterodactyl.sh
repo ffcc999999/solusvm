@@ -15,7 +15,7 @@ chmod -R 755 storage/* bootstrap/cache/
 mysqlpass=`openssl rand -base64 16`
 echo "CREATE USER 'pterodactyl'@'127.0.0.1' IDENTIFIED BY '$mysqlpass'; CREATE DATABASE panel; GRANT ALL PRIVILEGES ON panel.* TO 'pterodactyl'@'127.0.0.1' WITH GRANT OPTION;" | mysql -u root
 cp .env.example .env
-composer install --no-dev --optimize-autoloader
+composer install --no-dev --optimize-autoloader --no-interaction
 php artisan key:generate --force
 sed -i 's/^DB_PASSWORD.*$/DB_PASSWORD=$mysqlpass/' .env
 sed -i 's/^APP_URL.*$/APP_URL=http://$hostname/' .env
