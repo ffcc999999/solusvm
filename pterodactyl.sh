@@ -29,7 +29,7 @@ echo "wget nginx conf"
 wget https://raw.githubusercontent.com/ffcc999999/solusvm/main/nginx_default.conf -O /etc/nginx/sites-available/pterodactyl.conf
 echo "ln nginx conf"
 sudo ln -s /etc/nginx/sites-available/pterodactyl.conf /etc/nginx/sites-enabled/pterodactyl.conf
-echo "sed nginx conf"
+echo "sed nginx conf $hostname"
 sudo sed -i 's/^server_name.*$/server_name $hostname;/' /etc/nginx/sites-available/pterodactyl.conf
 echo "crontab schedule"
 (crontab -l 2>/dev/null; echo "* * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1") | crontab -
