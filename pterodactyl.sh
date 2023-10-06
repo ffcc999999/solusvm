@@ -34,16 +34,11 @@ sudo sed -i 's/^server_name.*$/server_name $hostname;/' /etc/nginx/sites-availab
 echo "crontab schedule"
 (crontab -l 2>/dev/null; echo "* * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1") | crontab -
 sh -c 'cat << EOF >> /etc/systemd/system/pteroq.service 
-# Pterodactyl Queue Worker File
-# ----------------------------------
-
 [Unit]
 Description=Pterodactyl Queue Worker
 After=redis-server.service
 
 [Service]
-# On some systems the user and group might be different.
-# Some systems use `apache` or `nginx` as the user and group.
 User=www-data
 Group=www-data
 Restart=always
