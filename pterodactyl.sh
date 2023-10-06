@@ -1,3 +1,4 @@
+#!/bin/bash
 hostname=$1
 apt update -y
 apt -y install software-properties-common curl apt-transport-https ca-certificates gnupg
