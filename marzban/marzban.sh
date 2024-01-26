@@ -199,7 +199,7 @@ show_marzban_logs() {
 }
 
 follow_marzban_logs() {
-    $COMPOSE -f $COMPOSE_FILE -p "$APP_NAME" logs -f
+    echo "logs"
 }
 
 marzban_cli() {
@@ -260,7 +260,7 @@ install_command() {
     install_marzban_script
     install_marzban
     up_marzban
-    #follow_marzban_logs
+    follow_marzban_logs
 }
 
 uninstall_command() {
@@ -336,7 +336,9 @@ up_command() {
     fi
     
     up_marzban
-
+    if [ "$no_logs" = false ]; then
+        follow_marzban_logs
+    fi
 }
 
 down_command() {
@@ -395,6 +397,9 @@ restart_command() {
     
     down_marzban
     up_marzban
+    if [ "$no_logs" = false ]; then
+        follow_marzban_logs
+    fi
 }
 
 status_command() {
@@ -474,7 +479,11 @@ logs_command() {
         exit 1
     fi
     
-
+    if [ "$no_follow" = true ]; then
+        show_marzban_logs
+    else
+        follow_marzban_logs
+    fi
 }
 
 cli_command() {
