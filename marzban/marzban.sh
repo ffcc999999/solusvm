@@ -336,9 +336,7 @@ up_command() {
     fi
     
     up_marzban
-    if [ "$no_logs" = false ]; then
-        #follow_marzban_logs
-    fi
+
 }
 
 down_command() {
@@ -397,9 +395,6 @@ restart_command() {
     
     down_marzban
     up_marzban
-    if [ "$no_logs" = false ]; then
-        #follow_marzban_logs
-    fi
 }
 
 status_command() {
@@ -479,11 +474,7 @@ logs_command() {
         exit 1
     fi
     
-    if [ "$no_follow" = true ]; then
-        show_marzban_logs
-    else
-        #follow_marzban_logs
-    fi
+
 }
 
 cli_command() {
