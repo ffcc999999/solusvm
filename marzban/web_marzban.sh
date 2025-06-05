@@ -51,7 +51,7 @@ EOF
 cat <<EOF | sudo tee $SYSCTL_FILE
 fs.file-max = 1000000
 net.ipv4.ip_forward = 1
-net.core.somaxconn = 1024
+net.core.somaxconn = 8192
 EOF
 
 sudo sysctl --system
@@ -75,8 +75,8 @@ EOF
 echo "[INFO] Systemd unit created: $SERVICE_FILE"
 
 sudo systemctl daemon-reload
-sudo systemctl enable proxy8000
-sudo systemctl restart proxy8000
+sudo systemctl enable proxy_marzban
+sudo systemctl restart proxy_marzban
 
 echo "[INFO] Service proxy_marzban up and running!"
 
