@@ -1,5 +1,5 @@
 debug: false
-app_name: Pterodactyl
+app_name: Pelican
 uuid: CHANGE_UUID
 token_id: CHANGE_TOKEN_ID
 token: CHANGE_TOKEN_N
@@ -14,13 +14,13 @@ api:
   upload_limit: 100
   trusted_proxies: []
 system:
-  root_directory: /var/lib/pterodactyl
-  log_directory: /var/log/pterodactyl
-  data: /var/lib/pterodactyl/volumes
-  archive_directory: /var/lib/pterodactyl/archives
-  backup_directory: /var/lib/pterodactyl/backups
-  tmp_directory: /tmp/pterodactyl
-  username: pterodactyl
+  root_directory: /var/lib/pelican
+  log_directory: /var/log/pelican
+  data: /var/lib/pelican/volumes
+  archive_directory: /var/lib/pelican/archives
+  backup_directory: /var/lib/pelican/backups
+  tmp_directory: /tmp/pelican
+  username: pelican
   timezone: "Europe/Berlin"
   user:
     rootless:
@@ -54,10 +54,10 @@ docker:
     dns:
     - 1.1.1.1
     - 1.0.0.1
-    name: pterodactyl_nw
+    name: pelican_nw
     ispn: false
     driver: bridge
-    network_mode: pterodactyl_nw
+    network_mode: pelican_nw
     is_internal: false
     enable_icc: true
     network_mtu: 1500
